@@ -26,6 +26,20 @@ min_node_count = 1
 max_node_count = 4
 ```
 
+Additional optional variables allow customizing the network and node settings per environment:
+
+```hcl
+network_name          = "my-vpc"
+subnetwork_name       = "my-subnet"
+ip_cidr_range         = "10.0.0.0/16"
+cluster_machine_type  = "e2-medium"
+cluster_disk_size_gb  = 50
+node_pool_machine_type = "e2-medium"
+node_pool_disk_size_gb = 50
+```
+
+These variables make it possible to fully isolate environments by choosing different machine types, disk sizes and network ranges.
+
 ## Deploying `iac-gke`
 
 ```bash
@@ -41,3 +55,4 @@ terraform apply
 cd cloud_gratis
 docker compose up -d
 ```
+

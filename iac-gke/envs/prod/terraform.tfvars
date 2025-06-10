@@ -6,3 +6,11 @@ node_count     = 3
 min_node_count = 2
 max_node_count = 6
 master_version = "1.33.0-gke.2248000"
+network_name = "prod-vpc-network"
+subnetwork_name = "prod-vpc-subnetwork"
+ip_cidr_range = "10.20.0.0/16"
+cluster_machine_type = "n1-standard-2"
+cluster_disk_size_gb = 100
+node_pool_machine_type = "n1-standard-2"
+node_pool_disk_size_gb = 100
+

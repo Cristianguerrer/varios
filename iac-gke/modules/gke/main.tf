@@ -9,12 +9,12 @@ provider "google-beta" {
 }
 
 resource "google_compute_network" "vpc_network" {
-  name = "vpc-network"
+  name = var.network_name
 }
 
 resource "google_compute_subnetwork" "vpc_subnetwork" {
-  name          = "vpc-subnetwork"
-  ip_cidr_range = "10.0.0.0/16"
+  name          = var.subnetwork_name
+  ip_cidr_range = var.ip_cidr_range
   network       = google_compute_network.vpc_network.name
   region        = var.region
 }
@@ -26,8 +26,8 @@ resource "google_container_cluster" "primary" {
   node_locations     = var.zones
 
   node_config {
-    machine_type = "n1-standard-2" # n1-standard-2
-    disk_size_gb = 50
+    machine_type = var.cluster_machine_type
+    disk_size_gb = var.cluster_disk_size_gb
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
     ]
@@ -51,8 +51,8 @@ resource "google_container_node_pool" "primary_nodes" {
 
   node_config {
     preemptible  = true
-    machine_type = "n1-standard-2" # n1-standard-2 e2-medium
-    # disk_size_gb = 50
+    machine_type = var.node_pool_machine_type
+    disk_size_gb = var.node_pool_disk_size_gb
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
     ]
