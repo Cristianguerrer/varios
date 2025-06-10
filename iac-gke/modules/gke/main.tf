@@ -26,7 +26,7 @@ resource "google_container_cluster" "primary" {
   node_locations     = var.zones
 
   node_config {
-    machine_type = "e2-medium" # n1-standard-2
+    machine_type = "n1-standard-2" # n1-standard-2
     disk_size_gb = 50
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
@@ -40,7 +40,7 @@ resource "google_container_cluster" "primary" {
   }
 
   remove_default_node_pool = true
-  min_master_version       = var.cluster_name
+  min_master_version       = var.master_version
 }
 
 resource "google_container_node_pool" "primary_nodes" {
