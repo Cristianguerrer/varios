@@ -40,7 +40,7 @@ resource "google_container_cluster" "primary" {
   }
 
   remove_default_node_pool = true
-  min_master_version       = var.cluster_name
+  min_master_version       = var.master_version
 }
 
 resource "google_container_node_pool" "primary_nodes" {
