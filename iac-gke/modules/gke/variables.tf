@@ -46,3 +46,45 @@ variable "master_version" {
   type        = string
   default     = "1.33.0-gke.2248000"
 }
+
+variable "network_name" {
+  description = "Name of the VPC network"
+  type        = string
+  default     = "vpc-network"
+}
+
+variable "subnetwork_name" {
+  description = "Name of the VPC subnetwork"
+  type        = string
+  default     = "vpc-subnetwork"
+}
+
+variable "ip_cidr_range" {
+  description = "CIDR range for the VPC subnetwork"
+  type        = string
+  default     = "10.0.0.0/16"
+}
+
+variable "cluster_machine_type" {
+  description = "Machine type for the cluster's default node pool"
+  type        = string
+  default     = "n1-standard-2"
+}
+
+variable "cluster_disk_size_gb" {
+  description = "Disk size in GB for nodes created with the cluster"
+  type        = number
+  default     = 50
+}
+
+variable "node_pool_machine_type" {
+  description = "Machine type for the managed node pool"
+  type        = string
+  default     = "n1-standard-2"
+}
+
+variable "node_pool_disk_size_gb" {
+  description = "Disk size in GB for the managed node pool"
+  type        = number
+  default     = 50
+}
