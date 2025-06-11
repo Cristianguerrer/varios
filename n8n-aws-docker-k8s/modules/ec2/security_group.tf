@@ -11,7 +11,7 @@ resource "aws_security_group" "n8n" {
   }
 
   ingress {
-    description = "Tráfico desde el ALB a instancia"
+    description = "Trafico interno"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
