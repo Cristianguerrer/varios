@@ -40,6 +40,16 @@ variable "record_name" {
   default     = ""
 }
 
+variable "certificate_arn" {
+  description = "ARN of the ACM certificate"
+  type        = string
+}
+
+variable "hosted_zone_id" {
+  description = "Route53 hosted zone ID"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to apply to created resources"
   type        = map(string)

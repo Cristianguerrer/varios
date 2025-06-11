@@ -10,8 +10,8 @@ output "subnet_ids" {
   value = module.n8n_instance.subnet_ids
 }
 
-output "route53_zone_id" {
-  value = module.n8n_instance.route53_zone_id
+output "hosted_zone_id" {
+  value = module.dns_acm.hosted_zone_id
 }
 
 output "route53_record_name" {
@@ -23,5 +23,5 @@ output "lb_dns_name" {
 }
 
 output "certificate_arn" {
-  value = module.n8n_instance.certificate_arn
+  value = module.dns_acm.certificate_arn
 }

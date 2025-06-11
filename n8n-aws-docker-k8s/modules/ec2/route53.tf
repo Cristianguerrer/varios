@@ -1,10 +1,6 @@
-resource "aws_route53_zone" "public" {
-  name = var.domain
-}
-
 resource "aws_route53_record" "root" {
-  zone_id = aws_route53_zone.public.zone_id
-  name    = var.record_name != "" ? var.record_name : aws_route53_zone.public.name
+  zone_id = var.hosted_zone_id
+  name    = var.record_name != "" ? var.record_name : var.domain
   type    = "A"
 
   alias {
