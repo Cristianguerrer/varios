@@ -1,14 +1,10 @@
 resource "aws_route53_zone" "public" {
   name = var.domain
 }
-data "aws_route53_zone" "this" {
-  name         = var.domain
-  private_zone = false
-}
 
 resource "aws_route53_record" "root" {
-  zone_id = data.aws_route53_zone.this.zone_id
-  name    = var.record_name != "" ? var.record_name : data.aws_route53_zone.this.name
+  zone_id = aws_route53_zone.public.zone_id
+  name    = var.record_name != "" ? var.record_name : aws_route53_zone.public.name
   type    = "A"
 
   alias {
