@@ -30,3 +30,12 @@ variable "domain" {
   type        = string
 }
 
+variable "acm_certificate_arn" {
+  description = "ARN of the ACM certificate for the HTTPS listener"
+  type        = string
+}
+
+variable "tags" {
+  description = "Tags to apply to created resources"
+  type        = map(string)
+}

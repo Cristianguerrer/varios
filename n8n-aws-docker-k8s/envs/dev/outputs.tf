@@ -17,3 +17,7 @@ output "route53_zone_id" {
 output "route53_record_name" {
   value = aws_route53_record.root.fqdn
 }
+
+output "lb_dns_name" {
+  value = module.n8n_instance.lb_dns_name
+}

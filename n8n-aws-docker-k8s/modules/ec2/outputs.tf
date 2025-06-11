@@ -13,3 +13,7 @@ output "vpc_id" {
 output "subnet_id" {
   value = aws_subnet.n8n.id
 }
+
+output "lb_dns_name" {
+  value = aws_lb.n8n.dns_name
+}
