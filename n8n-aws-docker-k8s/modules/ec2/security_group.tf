@@ -10,6 +10,14 @@ resource "aws_security_group" "n8n" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description     = "Tráfico desde el ALB a instancia"
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    security_groups = [aws_security_group.n8n.id] # Reemplaza con el ID real
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
