@@ -7,5 +7,5 @@ resource "aws_route53_record" "root" {
   name    = var.domain
   type    = "A"
   ttl     = 300
-  records = [module.n8n_instance.public_ip]
+  records = [aws_eip.n8n.public_ip]
 }

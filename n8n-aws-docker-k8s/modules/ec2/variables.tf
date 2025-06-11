@@ -33,6 +33,11 @@ variable "acm_certificate_arn" {
   type        = string
 }
 
+variable "domain" {
+  description = "Domain for the Route53 hosted zone"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to apply to created resources"
   type        = map(string)
