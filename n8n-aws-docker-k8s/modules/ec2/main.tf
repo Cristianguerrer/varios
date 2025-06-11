@@ -49,8 +49,8 @@ resource "aws_security_group" "n8n" {
 
   ingress {
     description = "n8n"
-    from_port   = 5678
-    to_port     = 5678
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -78,7 +78,7 @@ resource "aws_instance" "n8n" {
 
 resource "aws_eip" "n8n" {
   instance = aws_instance.n8n.id
-  vpc      = true
+  domain = "vpc"
 }
 
 output "public_ip" {
