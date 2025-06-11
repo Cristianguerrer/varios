@@ -25,3 +25,8 @@ variable "subnet_cidr" {
   type        = string
 }
 
+variable "domain" {
+  description = "Domain for Route53 hosted zone"
+  type        = string
+}
+

@@ -68,7 +68,7 @@ resource "aws_instance" "n8n" {
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.n8n.id
   vpc_security_group_ids = [aws_security_group.n8n.id]
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   user_data             = file("${path.module}/user_data.sh")
 
   tags = {
@@ -76,8 +76,13 @@ resource "aws_instance" "n8n" {
   }
 }
 
+resource "aws_eip" "n8n" {
+  instance = aws_instance.n8n.id
+  vpc      = true
+}
+
 output "public_ip" {
-  value = aws_instance.n8n.public_ip
+  value = aws_eip.n8n.public_ip
 }
 
 output "instance_id" {
