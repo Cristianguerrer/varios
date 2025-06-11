@@ -11,11 +11,11 @@ resource "aws_security_group" "n8n" {
   }
 
   ingress {
-    description     = "Tráfico desde el ALB a instancia"
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [aws_security_group.n8n.id]
+    description = "Tráfico desde el ALB a instancia"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    self        = true
   }
 
   egress {
