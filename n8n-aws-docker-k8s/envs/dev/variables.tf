@@ -20,9 +20,9 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "subnet_cidr" {
-  description = "CIDR block for the subnet"
-  type        = string
+variable "subnet_cidrs" {
+  description = "List of CIDR blocks for the subnets"
+  type        = list(string)
 }
 
 variable "domain" {

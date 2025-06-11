@@ -10,8 +10,8 @@ output "vpc_id" {
   value = aws_vpc.n8n.id
 }
 
-output "subnet_id" {
-  value = aws_subnet.n8n.id
+output "subnet_ids" {
+  value = [for s in aws_subnet.n8n : s.id]
 }
 
 output "lb_dns_name" {

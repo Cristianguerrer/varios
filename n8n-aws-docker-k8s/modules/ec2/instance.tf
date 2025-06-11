@@ -11,7 +11,7 @@ data "aws_ami" "amazon_linux" {
 resource "aws_instance" "n8n" {
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = var.instance_type
-  subnet_id              = aws_subnet.n8n.id
+  subnet_id              = values(aws_subnet.n8n)[0].id
   vpc_security_group_ids = [aws_security_group.n8n.id]
   associate_public_ip_address = false
   user_data             = file("${path.module}/user_data.sh")

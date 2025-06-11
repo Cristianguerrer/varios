@@ -65,14 +65,14 @@ terraform init
 terraform apply
 ```
 
-The EC2 module now provisions a VPC with a public subnet, internet gateway and
-route table. Use the following variables to control the network ranges:
+The EC2 module now provisions a VPC with one or more public subnets, an internet gateway and
+a route table. Use the following variables to control the network ranges:
 
 ```hcl
-vpc_cidr    = "10.0.0.0/16"
-subnet_cidr = "10.0.1.0/24"
+vpc_cidr     = "10.0.0.0/16"
+subnet_cidrs = ["10.0.1.0/24", "10.0.2.0/24"]
 ```
 
-After apply, Terraform outputs the VPC ID, subnet ID and the instance's public
+After apply, Terraform outputs the VPC ID, the list of subnet IDs and the instance's public
 IP address.
 
