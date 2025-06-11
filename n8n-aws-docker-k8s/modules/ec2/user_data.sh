@@ -23,7 +23,7 @@ services:
     image: n8nio/n8n
     restart: always
     ports:
-      - "5678:5678"
+      - "80:5678"
     volumes:
       - n8n_data:/home/node/.n8n
 volumes:
