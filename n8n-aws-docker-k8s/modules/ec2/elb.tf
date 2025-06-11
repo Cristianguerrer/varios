@@ -1,7 +1,7 @@
 resource "aws_lb" "n8n" {
   name               = "${var.instance_name}-alb"
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.lb.id]
+  security_groups    = [aws_security_group.n8n.id]
   subnets            = [aws_subnet.n8n.id]
 
   tags = merge(var.tags, { Name = "${var.instance_name}-alb" })
