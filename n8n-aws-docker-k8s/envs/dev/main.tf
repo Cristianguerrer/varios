@@ -7,4 +7,5 @@ module "n8n_instance" {
   subnet_cidrs  = var.subnet_cidrs
   tags                = var.tags
   domain   = var.domain
+  record_name = var.record_name
 }

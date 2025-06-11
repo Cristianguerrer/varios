@@ -30,6 +30,12 @@ variable "domain" {
   type        = string
 }
 
+variable "record_name" {
+  description = "Record name for the alias. Leave empty for root"
+  type        = string
+  default     = ""
+}
+
 variable "tags" {
   description = "Tags to apply to created resources"
   type        = map(string)
