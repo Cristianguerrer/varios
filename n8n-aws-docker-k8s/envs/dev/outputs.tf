@@ -21,3 +21,7 @@ output "route53_record_name" {
 output "lb_dns_name" {
   value = module.n8n_instance.lb_dns_name
 }
+
+output "certificate_arn" {
+  value = module.n8n_instance.certificate_arn
+}
