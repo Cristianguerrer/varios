@@ -6,6 +6,7 @@ This repository contains small experiments for local development and for provisi
 
 - **cloud_gratis/** - Docker Compose example that runs WordPress and MySQL.
 - **iac-gke/** - Contains all infrastructure code. Inside you'll find a reusable module under `modules/gke` and per-environment configurations in `envs/`.
+- **n8n-aws-docker-k8s/** - Terraform for launching an AWS EC2 instance running n8n with Docker.
 
 ## Terraform Version Requirements
 
@@ -54,5 +55,13 @@ terraform apply
 ```bash
 cd cloud_gratis
 docker compose up -d
+```
+
+## Deploying n8n on AWS
+
+```bash
+cd n8n-aws-docker-k8s/envs/dev
+terraform init
+terraform apply
 ```
 
