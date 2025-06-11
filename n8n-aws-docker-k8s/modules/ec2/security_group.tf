@@ -15,7 +15,7 @@ resource "aws_security_group" "n8n" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [aws_security_group.n8n.id] # Reemplaza con el ID real
+    security_groups = [aws_security_group.n8n.id]
   }
 
   egress {

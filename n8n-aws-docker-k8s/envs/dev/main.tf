@@ -5,7 +5,6 @@ module "n8n_instance" {
   instance_type = var.instance_type
   vpc_cidr      = var.vpc_cidr
   subnet_cidrs  = var.subnet_cidrs
-  # acm_certificate_arn = var.acm_certificate_arn
   tags                = var.tags
   domain   = var.domain
 }

@@ -28,10 +28,6 @@ variable "subnet_cidrs" {
   default     = ["10.0.1.0/24"]
 }
 
-# variable "acm_certificate_arn" {
-#   description = "ARN of the ACM certificate for the HTTPS listener"
-#   type        = string
-# }
 
 variable "domain" {
   description = "Domain for the Route53 hosted zone"
