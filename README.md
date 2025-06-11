@@ -62,8 +62,14 @@ docker compose up -d
 ```bash
 cd n8n-aws-docker-k8s/envs/dev
 terraform init
+# create the hosted zone and certificate first
+terraform apply -target=module.dns_acm
+# then provision the EC2 instance and ALB
 terraform apply
 ```
+
+Running the first apply targets only the DNS and ACM resources so the
+certificate can be validated before creating the load balancer.
 
 The EC2 module now provisions a VPC with one or more public subnets, an internet gateway and
 a route table. Use the following variables to control the network ranges:
