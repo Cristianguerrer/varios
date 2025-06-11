@@ -3,4 +3,6 @@ module "n8n_instance" {
   region        = var.region
   instance_name = var.instance_name
   instance_type = var.instance_type
+  vpc_cidr      = var.vpc_cidr
+  subnet_cidr   = var.subnet_cidr
 }
