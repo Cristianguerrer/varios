@@ -7,4 +7,5 @@ module "n8n_instance" {
   subnet_cidr   = var.subnet_cidr
   acm_certificate_arn = var.acm_certificate_arn
   tags                = var.tags
+  domain   = var.domain
 }
