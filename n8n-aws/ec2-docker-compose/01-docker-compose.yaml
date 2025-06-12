@@ -1,0 +1,36 @@
+  version: '3'
+  services:
+    reverse-proxy:
+      image: traefik:v2.10
+      command:
+        - --log.level=INFO
+        - --api.insecure=true
+        - --providers.docker=true
+        - --providers.docker.exposedbydefault=false
+        - --entryPoints.web.address=:80
+        - --entryPoints.websecure.address=:443
+        - --certificatesResolvers.myresolver.acme.email=cristian@laboratoriosconcristian.site
+        - --certificatesResolvers.myresolver.acme.storage=/etc/traefik/acme.json
+        - --certificatesResolvers.myresolver.acme.httpChallenge.entryPoint=web
+      ports:
+        - "80:80"
+        - "443:443"
+        - "8080:8080"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - ./traefik:/etc/traefik/
+
+    n8n:
+      image: n8nio/n8n
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.n8n.rule=Host(`n8n.laboratoriosconcristian.site`)"
+        - "traefik.http.routers.n8n.entryPoints=websecure"
+        - "traefik.http.routers.n8n.tls.certResolver=myresolver"
+      container_name: n8n
+      restart: always
+      volumes:
+        - n8n_data:/home/node/.n8n
+
+  volumes:
+    n8n_data:

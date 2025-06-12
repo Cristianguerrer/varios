@@ -1,0 +1,5 @@
+aws_region = "us-east-1"
+instance_type = "t2.micro"
+ami_id = "ami-04681163a08179f28"
+key_name = "mi-clave-terraform"
+n8n_domain = "n8n.laboratoriosconcristian.site"

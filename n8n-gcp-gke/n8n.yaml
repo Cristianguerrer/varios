@@ -1,8 +1,16 @@
 ---
 apiVersion: v1
+kind: Secret
+metadata:
+  name: n8n-secret1
+type: Opaque
+stringData:
+  encryptionKey: lJynsrJd1zvHOakzKLd7
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: n8n-data
+  name: n8n-data1
 spec:
   accessModes:
     - ReadWriteOnce
@@ -11,21 +19,10 @@ spec:
       storage: 1Gi
   storageClassName: standard
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: n8n-auth
-type: Opaque
-stringData:
-  username: admin
-  password: supersecure123
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: n8n
-  labels:
-    app: n8n
 spec:
   replicas: 1
   selector:
@@ -36,91 +33,56 @@ spec:
       labels:
         app: n8n
     spec:
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 1000:1000 /data"]
+          volumeMounts:
+            - name: n8n-data
+              mountPath: /data
       containers:
         - name: n8n
-          image: n8nio/n8n:latest
+          image: n8nio/n8n
           ports:
             - containerPort: 5678
           env:
-            - name: N8N_BASIC_AUTH_ACTIVE
-              value: "true"
-            - name: N8N_BASIC_AUTH_USER
-              valueFrom:
-                secretKeyRef:
-                  name: n8n-auth
-                  key: username
-            - name: N8N_BASIC_AUTH_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: n8n-auth
-                  key: password
             - name: N8N_HOST
-              value: "laboratoriosconcristian.site"
+              value: "localhost"
             - name: N8N_PORT
-              value: "443"
+              value: "5678"
             - name: N8N_PROTOCOL
-              value: "https"
+              value: "http"
+            - name: N8N_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-secret1
+                  key: encryptionKey
+            - name: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
+              value: "true"
+            - name: N8N_RUNNERS_ENABLED
+              value: "true"
           volumeMounts:
-            - name: n8n-storage
+            - name: n8n-data
               mountPath: /home/node/.n8n
-          resources:
-            requests:
-              cpu: "250m"
-              memory: "256Mi"
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 5678
-            initialDelaySeconds: 20
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 5678
-            initialDelaySeconds: 10
-            periodSeconds: 5
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
       volumes:
-        - name: n8n-storage
+        - name: n8n-data
           persistentVolumeClaim:
-            claimName: n8n-data
+            claimName: n8n-data1
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: n8n
 spec:
+  type: ClusterIP
   selector:
     app: n8n
   ports:
     - name: http
       port: 80
       targetPort: 5678
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: n8n-ingress
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-spec:
-  tls:
-    - hosts:
-        - laboratoriosconcristian.site
-      secretName: n8n-tls
-  rules:
-    - host: laboratoriosconcristian.site
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: n8n
-                port:
-                  number: 80
